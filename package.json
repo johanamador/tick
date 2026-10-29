@@ -1,0 +1,48 @@
+{
+  "name": "tick",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/johanamador/tick.git"
+  },
+  "bugs": "https://github.com/johanamador/tick/issues",
+  "scripts": {
+    "dev": "next dev --hostname 127.0.0.1 --port 3006",
+    "build": "next build",
+    "start": "next start --hostname 127.0.0.1 --port 3006",
+    "typecheck": "next typegen && tsc --noEmit",
+    "test": "tsx --test tests/*.test.ts tests/*.test.tsx",
+    "admin": "node --env-file=.env.local scripts/create-admin.mjs"
+  },
+  "dependencies": {
+    "@radix-ui/react-dropdown-menu": "^2.2.1",
+    "@supabase/ssr": "0.12.7",
+    "@supabase/supabase-js": "2.118.0",
+    "@tiptap/extension-list": "^3.32.1",
+    "@tiptap/extension-placeholder": "^3.32.1",
+    "@tiptap/markdown": "^3.32.1",
+    "@tiptap/react": "^3.32.1",
+    "@tiptap/starter-kit": "^3.32.1",
+    "lucide-react": "1.63.0",
+    "next": "16.4.3",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^16.3.3",
+    "@types/jsdom": "^30.0.0",
+    "@types/node": "^24",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "jsdom": "^30.1.3",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": "24.x"
+  },
+  "license": "MIT"
+}

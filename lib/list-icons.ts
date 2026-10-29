@@ -1,0 +1,23 @@
+export const listIconNames = [
+  "list",
+  "inbox",
+  "home",
+  "work",
+  "code",
+  "heart",
+  "film",
+  "book",
+  "game",
+  "shopping",
+  "calendar",
+  "target",
+  "idea",
+  "music",
+  "travel",
+  "star",
+  "fitness",
+  "study",
+  "coffee",
+  "folder",
+] as const;
+export type ListIconName = (typeof listIconNames)[number];

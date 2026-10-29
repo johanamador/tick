@@ -1,0 +1,12 @@
+.git/
+AGENTS.md
+.references/
+.env*
+!.env.example
+.next/
+node_modules/
+test-results/
+supabase/.temp/
+supabase/.branches/
+*.tsbuildinfo
+*.log

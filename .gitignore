@@ -1,0 +1,13 @@
+node_modules/
+AGENTS.md
+.next/
+.vercel/
+.env*
+!.env.example
+.references/
+*.tsbuildinfo
+next-env.d.ts
+test-results/
+*.log
+supabase/.temp/
+supabase/.branches/
