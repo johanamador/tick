@@ -302,4 +302,6 @@ export const spanish: Record<string, string> = {
   "Open {category}": "Abrir {category}",
   "Johan Amador's website": "Web de Johan Amador",
   "tick on GitHub": "tick en GitHub",
+  Preview: "Vista previa",
+  "tick preview: {view}": "Vista previa de tick: {view}",
 };

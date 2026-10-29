@@ -1,5 +1,8 @@
 <p align="center">
-  <img src="docs/assets/tick.svg" alt="tick" width="180" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/tick-dark.svg" />
+    <img src="docs/assets/tick.svg" alt="tick" width="180" />
+  </picture>
 </p>
 
 <p align="center">Media lists, tasks and Markdown notes.</p>

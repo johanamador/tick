@@ -2547,7 +2547,7 @@ button.tag-chip:hover,
   flex-direction: column;
   gap: 32px;
   min-height: 100svh;
-  max-width: 1400px;
+  max-width: 1600px;
   padding: 36px 48px;
   margin: auto;
 }
@@ -2562,6 +2562,66 @@ button.tag-chip:hover,
 .login-panel {
   width: 100%;
   max-width: 360px;
+  justify-self: center;
+}
+.login-layout.with-preview {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
+  gap: clamp(40px, 5vw, 88px);
+}
+.login-preview {
+  min-width: 0;
+}
+.login-preview-screen {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #0a0a0a;
+}
+.login-preview-screen img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: login-preview-reveal 180ms ease-out;
+}
+.login-preview-tabs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 18px;
+}
+.login-preview-tabs > button {
+  min-height: 32px;
+  padding: 0 14px;
+  border: 1px solid transparent;
+  color: var(--muted);
+  font-size: 11px;
+}
+.login-preview-tabs > button:hover {
+  color: var(--fg);
+}
+.login-preview-tabs > button[aria-selected="true"] {
+  color: var(--fg);
+  border-color: var(--border);
+  background: var(--panel);
+}
+@keyframes login-preview-reveal {
+  from {
+    opacity: 0.55;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (max-width: 1000px) {
+  .login-layout.with-preview {
+    display: flex;
+  }
+  .login-preview {
+    display: none;
+  }
 }
 @media (max-width: 680px) {
   .login-page {

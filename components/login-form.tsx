@@ -1,20 +1,34 @@
 "use client";
 import { useLanguage } from "./language-provider";
-import { useState } from "react";
+import { useId, useState } from "react";
 import { TickLogo } from "./tick-logo";
 import { LanguageSwitch } from "./language-switch";
 import { ArrowRight, Eye, EyeOff, LoaderCircle } from "lucide-react";
+
+export type LoginScreenshot = {
+  id: string;
+  label: string;
+  src: string;
+  width: number;
+  height: number;
+};
+
 export function LoginForm({
   configured,
   showPreview,
+  screenshots = [],
 }: {
   configured: boolean;
   showPreview: boolean;
+  screenshots?: LoginScreenshot[];
 }) {
   const { t } = useLanguage();
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [preview, setPreview] = useState(0);
+  const previewId = useId();
+  const activeScreenshot = screenshots[preview] ?? screenshots[0];
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setBusy(true);
@@ -76,7 +90,66 @@ export function LoginForm({
           <LanguageSwitch />
         </div>
       </header>
-      <div className="login-layout">
+      <div className={`login-layout ${activeScreenshot ? "with-preview" : ""}`}>
+        {activeScreenshot && (
+          <aside className="login-preview" aria-label={t("Preview")}>
+            <div
+              className="login-preview-screen"
+              role="tabpanel"
+              id={`${previewId}-panel`}
+              aria-labelledby={`${previewId}-${activeScreenshot.id}`}
+            >
+              <img
+                key={activeScreenshot.id}
+                src={activeScreenshot.src}
+                width={activeScreenshot.width}
+                height={activeScreenshot.height}
+                loading="lazy"
+                decoding="async"
+                alt={t("tick preview: {view}", {
+                  view: t(activeScreenshot.label),
+                })}
+                draggable={false}
+              />
+            </div>
+            <div
+              className="login-preview-tabs"
+              role="tablist"
+              aria-label={t("Preview")}
+            >
+              {screenshots.map((screenshot, index) => (
+                <button
+                  type="button"
+                  role="tab"
+                  id={`${previewId}-${screenshot.id}`}
+                  key={screenshot.id}
+                  aria-controls={`${previewId}-panel`}
+                  aria-selected={activeScreenshot.id === screenshot.id}
+                  tabIndex={activeScreenshot.id === screenshot.id ? 0 : -1}
+                  onClick={() => setPreview(index)}
+                  onKeyDown={(event) => {
+                    let next = index;
+                    if (event.key === "ArrowRight")
+                      next = (index + 1) % screenshots.length;
+                    else if (event.key === "ArrowLeft")
+                      next =
+                        (index - 1 + screenshots.length) % screenshots.length;
+                    else if (event.key === "Home") next = 0;
+                    else if (event.key === "End") next = screenshots.length - 1;
+                    else return;
+                    event.preventDefault();
+                    setPreview(next);
+                    document
+                      .getElementById(`${previewId}-${screenshots[next].id}`)
+                      ?.focus();
+                  }}
+                >
+                  {t(screenshot.label)}
+                </button>
+              ))}
+            </div>
+          </aside>
+        )}
         <section className="login-panel" aria-labelledby="login-title">
           <h1 id="login-title">{t("Welcome back.")}</h1>
           <p>{t("Sign in to your workspace.")}</p>

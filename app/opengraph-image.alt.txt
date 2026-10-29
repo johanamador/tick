@@ -1,0 +1,1 @@
+tick workspace with category shortcuts for media, tasks and notes

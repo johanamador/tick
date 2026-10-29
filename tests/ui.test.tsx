@@ -590,6 +590,42 @@ test("language selection translates the interface and persists the choice", asyn
   await app.findByRole("heading", { name: "Welcome back." });
 });
 
+test("login preview supports keyboard switching without clearing the form", () => {
+  const screenshots = ["Overview", "Tasks", "Notes"].map((label) => ({
+    id: label.toLowerCase(),
+    label,
+    src: `/${label.toLowerCase()}.webp`,
+    width: 1600,
+    height: 900,
+  }));
+  const app = render(
+    <LoginForm configured showPreview screenshots={screenshots} />,
+  );
+  fireEvent.change(app.getByLabelText("Username"), {
+    target: { value: "reader" },
+  });
+  fireEvent.keyDown(app.getByRole("tab", { name: "Overview" }), {
+    key: "ArrowRight",
+  });
+  assert.equal(
+    app.getByRole("tab", { name: "Tasks" }).getAttribute("aria-selected"),
+    "true",
+  );
+  assert.equal(
+    app.getByRole("img", { name: "tick preview: Tasks" }).getAttribute("src"),
+    "/tasks.webp",
+  );
+  fireEvent.keyDown(app.getByRole("tab", { name: "Tasks" }), { key: "End" });
+  assert.equal(
+    app.getByRole("tab", { name: "Notes" }).getAttribute("aria-selected"),
+    "true",
+  );
+  assert.equal(
+    (app.getByLabelText("Username") as HTMLInputElement).value,
+    "reader",
+  );
+});
+
 test("profile starts neutral and saves a chosen name without affecting login credentials", async () => {
   const app = render(
     <WorkspaceApp initial={structuredClone(demoWorkspace)} email="demo" demo />,
